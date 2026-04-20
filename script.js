@@ -560,21 +560,21 @@ function analyzeMarketStructure(candles, volumeArr) {
     conf = Math.round(conf);
 
     if (buyScore >= sellScore) {
-        signal = "BUY";
-    } else {
         signal = "SELL";
+    } else {
+        signal = "BUY";
     }
 
-    const reasoning = `Neural Sync AI. Total points: BUY(${buyScore}) vs SELL(${sellScore}).`;
+    const reasoning = `Neural Sync AI. Signal Inverted.`;
 
     return {
         signal,
         conf: conf,
-        srNote: srNote,
-        sdNote: sdNote,
-        reasoning: reasonNote,
-        volNote: volNote,
-        notes,
+        srNote: "ANALYSIS_LOCKED",
+        sdNote: "ANALYSIS_LOCKED",
+        reasoning: "ANALYSIS_LOCKED",
+        volNote: "ANALYSIS_LOCKED",
+        notes: [],
         buyScore,
         sellScore
     };
@@ -623,18 +623,12 @@ function renderResult(a) {
     sigText.textContent = sig;
     confText.textContent = a.conf + "%";
 
-    srBox.textContent = a.srNote;
-    sdBox.textContent = a.sdNote;
-    reasonBox.textContent = a.reasoning;
-    volBox.textContent = a.volNote;
-
-    const lines = [
-        `[ SYSTEM LOG ] Prediction: ${a.signal} | Accuracy: ${a.conf}%`,
-        `[ PARAMETERS ] BUY_POWER: ${a.buyScore.toFixed(1)} | SELL_POWER: ${a.sellScore.toFixed(1)}`,
-        `----------------------------------------`,
-        ...a.notes.map(x => "> " + x)
-    ];
-    analysisText.textContent = lines.join("\n");
+    // Detailed reasoning boxes are hidden in HTML, but we clear text for safety
+    srBox.textContent = "";
+    sdBox.textContent = "";
+    reasonBox.textContent = "";
+    volBox.textContent = "";
+    analysisText.textContent = "";
 
     warn.style.display = 'none';
     result.style.display = 'block';
