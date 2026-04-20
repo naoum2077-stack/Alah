@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="The Witcher Bot - Hacker Edition. Advanced AI Chart Analysis for Binary Options (S&R, Supply/Demand)." />
+    <title>The Witcher Bot — Power Bot Hacker Edition</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- Matrix Background -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <div class="wrap">
+        <div class="header">
+            <div class="brand">
+                <div class="logo" aria-hidden="true" title="The Witcher Bot">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                        <path d="M4 19V10" stroke="#00ff00" stroke-width="2" stroke-linecap="square"/>
+                        <path d="M10 19V5" stroke="#00ff00" stroke-width="2" stroke-linecap="square"/>
+                        <path d="M16 19V13" stroke="#00ff00" stroke-width="2" stroke-linecap="square"/>
+                        <path d="M22 19H2" stroke="#00aa00" stroke-width="2" stroke-linecap="square"/>
+                    </svg>
+                </div>
+                <div class="title">
+                    <h1><span class="goldText">POWER BOT</span> OTC</h1>
+                    <p>AI Engine • Supply & Demand • S&R (Next Candle)</p>
+                </div>
+            </div>
+            <div class="badge">
+                <span class="dot"></span>
+                <span style="font-size:13px; color:#00ff00; font-family:'Share Tech Mono';">SYSTEM: ONLINE</span>
+            </div>
+        </div>
+
+        <div class="grid">
+            <!-- Left Panel -->
+            <div class="card">
+                <div class="uploader">
+                    <input id="file" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+                    
+                    <div id="drop" class="drop" role="button" tabindex="0">
+                        <div class="dropInner">
+                            <div class="uploadIcon" aria-hidden="true">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 16V4" stroke="#00ff00" stroke-width="2" stroke-linecap="square"/>
+                                    <path d="M7 9l5-5 5 5" stroke="#00ff00" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
+                                    <path d="M20 16.5a4.5 4.5 0 0 0-3.6-4.4" stroke="rgba(0,255,0,0.5)" stroke-width="2" stroke-linecap="square"/>
+                                    <path d="M4 16.5a4.5 4.5 0 0 1 3.6-4.4" stroke="rgba(0,255,0,0.5)" stroke-width="2" stroke-linecap="square"/>
+                                    <path d="M6 20h12" stroke="#00cc00" stroke-width="2" stroke-linecap="square"/>
+                                </svg>
+                            </div>
+                            <h2>[ INITIATE SCAN ]</h2>
+                            <p>ارفع سكرين شوت قبل إغلاق الشمعة الحالية لتحليل الشمعة القادمة.<br/>(PNG/JPG/WEBP)</p>
+                            <span class="ready"><span class="dot" style="margin-right: 5px; width:8px;height:8px;"></span> connected</span>
+                        </div>
+                    </div>
+
+                    <div id="previewWrap" class="previewWrap">
+                        <div class="scan-line" id="scanLine"></div>
+                        <button id="removeBtn" class="removeBtn" title="حذف وإلغاء">X</button>
+                        <div id="roiTag" class="roiTag">ROI: S&R + Supply/Demand Target</div>
+                        <img id="preview" alt="Chart Preview" />
+                        
+                        <div id="overlay" class="overlay">
+                            <div class="glitch-text">ANALYZING DATA...</div>
+                            <div style="color:#00ff00; font-family:'Share Tech Mono'; margin-top:10px;">DECRYPTING CANDLES</div>
+                        </div>
+                    </div>
+
+                    <div id="warn" class="warn">
+                        <h3>[ ERROR DETECTED ]</h3>
+                        <p id="warnMsg">تعذر استخراج بيانات حقيقية. الصورة لا تبدو شارت شموع واضح.</p>
+                    </div>
+
+                    <div id="result" class="result">
+                        <div class="bar">
+                            <div id="barFill"></div>
+                        </div>
+
+                        <div class="signalHead">
+                            <div class="signal">
+                                <div id="bigIcon" class="bigIcon" aria-hidden="true"></div>
+                                <p id="sigText" class="sigText">BUY</p>
+                            </div>
+
+                            <div class="confidence">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-left:8px;">
+                                    <path d="M12 22a10 10 0 1 0-10-10" stroke="#00ff00" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M12 18a6 6 0 1 0-6-6" stroke="#00aa00" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M12 14a2 2 0 1 0-2-2" stroke="#00ff00" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <span id="confText">82%</span>
+                            </div>
+                        </div>
+
+                        <div class="chips">
+                            <div class="chip">
+                                <div class="k">ZAKHAM (الزخم)</div>
+                                <div class="v" id="srBox">—</div>
+                            </div>
+                            <div class="chip">
+                                <div class="k">DAGHT (الضغط)</div>
+                                <div class="v" id="sdBox">—</div>
+                            </div>
+                            <div class="chip">
+                                <div class="k">TATHABDUB (التذبذب)</div>
+                                <div class="v" id="reasonBox">—</div>
+                            </div>
+                            <div class="chip">
+                                <div class="k">TADAFFUQ (التدفق)</div>
+                                <div class="v" id="volBox">—</div>
+                            </div>
+                        </div>
+
+                        <div class="analysisText" id="analysisText">—</div>
+
+                        <div style="margin-top:10px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+                            <div style="color:rgba(0,255,0,.55); font-family:'Share Tech Mono'; font-size:12px">
+                                AUTO-DESTRUCT IN <b id="secLeft">11</b>s
+                            </div>
+                            <div style="color:#00ff00; font-size:12px; font-family:'Share Tech Mono';">
+                                EXPECTATION FOR NEXT CANDLE
+                            </div>
+                        </div>
+                    </div>
+
+                    <canvas id="cv" style="display:none"></canvas>
+                    <canvas id="tmp" style="display:none"></canvas>
+                </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="card">
+                <div class="side">
+                    <div class="mini">
+                        <h3>[ FORCED PREDICTION ]</h3>
+                        <p>
+                            النظام يعمل بوضعية "التوقع الإجباري الدقيق". لن يعطيك إشارة WAIT أبداً إلا إذا كانت الصورة غير واضحة. ستحصل دائماً على إتجاه BUY أو SELL بناءً على قوى السوق.
+                        </p>
+                    </div>
+
+                    <div class="mini">
+                        <h3>Neural Sync Modules (ia)</h3>
+                        <p>
+                            • الزخم (ZAKHAM): دمج RSI مع ROC.<br/>
+                            • الضغط (DAGHT): تحليل نسبة الشموع والذيول.<br/>
+                            • التذبذب (TATHABDUB): مراقبة البولينجر باندز.<br/>
+                            • التدفق (TADAFFUQ): استمرارية السيولة عبر تقاطع EMA.
+                        </p>
+                    </div>
+
+                    <div class="mini">
+                        <h3>Operating Instructions</h3>
+                        <p>
+                            1. التقط السكرين شوت <b>قبل إغلاق الشمعة الحالية بـ 10-15 ثانية</b>.<br/>
+                            2. ارفع الصورة هنا ليقوم البوت بقراءة السلوك السعري الحي.<br/>
+                            3. الإشارة المعطاة هي للـ <b>الشمعة القادمة</b> مباشرة.
+                        </p>
+                    </div>
+
+                    <div class="footer">© 2026 POWER BOT OTC — Hacker Edition</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
